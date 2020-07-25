@@ -6,7 +6,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Data
-@Builder
 @NoArgsConstructor
 @ToString
 @Entity

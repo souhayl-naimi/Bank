@@ -17,6 +17,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "OP_TYPE",
         discriminatorType = DiscriminatorType.STRING,length = 1)
+@Table(name = "operations")
 public abstract class Operation implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long operationNumber;

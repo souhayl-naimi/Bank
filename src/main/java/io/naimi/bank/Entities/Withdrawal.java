@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Data
-@Builder
 @NoArgsConstructor
 @ToString
 @Entity

@@ -18,6 +18,7 @@ import java.util.Date;
 @DiscriminatorColumn(name = "ACCOUNT_TYPE",
         discriminatorType= DiscriminatorType.STRING,length = 2)
 @Entity
+@Table(name = "accounts")
 public abstract class Account implements Serializable {
     @Id
     private String accountCode;

@@ -14,6 +14,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @ToString
 @Entity
+@Table(name = "clients")
 public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
