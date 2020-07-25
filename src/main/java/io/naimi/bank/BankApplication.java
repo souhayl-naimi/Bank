@@ -4,10 +4,12 @@ import io.naimi.bank.DAO.AccountRepository;
 import io.naimi.bank.DAO.ClientRepository;
 import io.naimi.bank.DAO.OperationRepository;
 import io.naimi.bank.Entities.*;
+import io.naimi.bank.Services.BusinessImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Date;
 
@@ -19,6 +21,8 @@ public class BankApplication implements CommandLineRunner {
     private AccountRepository accountRepository;
     @Autowired
     private OperationRepository operationRepository;
+    @Autowired
+    private BusinessImplementation businessImplementation;
     public static void main(String[] args) {
         SpringApplication.run(BankApplication.class, args);
     }
@@ -52,11 +56,15 @@ public class BankApplication implements CommandLineRunner {
         accountSa.setClient(soukaina);
         accountRepository.save(accountSa);
 
-        Withdrawal withdrawal = new Withdrawal();
-        withdrawal.setAccount(accountCh);
-        withdrawal.setOperationAmount(1000.00);
-        withdrawal.setOperationDate(new Date());
-        operationRepository.save(withdrawal);
+      
+
+        businessImplementation.pay(accountCh.getAccountCode(),10000.00);
+        businessImplementation.pay(accountCh.getAccountCode(),10000.00);
+        businessImplementation.pay(accountCh.getAccountCode(),10000.00);
+
+
+
+
 
     }
 }
