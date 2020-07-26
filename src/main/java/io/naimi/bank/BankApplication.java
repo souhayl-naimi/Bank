@@ -57,12 +57,17 @@ public class BankApplication implements CommandLineRunner {
         accountRepository.save(accountSa);
 
       
+/*
 
         businessImplementation.pay(accountCh.getAccountCode(),10000.00);
-        businessImplementation.pay(accountCh.getAccountCode(),10000.00);
-        businessImplementation.pay(accountCh.getAccountCode(),10000.00);
+        businessImplementation.pay(accountCh.getAccountCode(),4550.00);
+        businessImplementation.pay(accountCh.getAccountCode(),2000.00);
 
+        businessImplementation.withdraw(accountCh.getAccountCode(),1200.00);
+        businessImplementation.withdraw(accountCh.getAccountCode(),200.00);
 
+        businessImplementation.transfer(accountSa.getAccountCode(),accountCh.getAccountCode(),20000.00);
+*/
 
 
 

@@ -66,11 +66,52 @@
                     <div class="card-body">
                         <h6 >Account Operations:</h6>
                         <hr class="mb-3"/>
+                        <form th:action="@{/saveOperation}" method="post">
+                            <div class="form-group">
+                                <label class="control-label font-weight-bold">Account Code : </label>
+                               <input type="hidden" name="accountCode" th:value="${accountCode}"/>
+                                <label th:text="${accountCode}"></label>
+                            </div>
+                            <div class="form-group">
+
+                                <input  type="radio" name="typeOperation" value="PAY"
+                                       onchange="document.getElementById('forTransfer').style.display='none'"
+                                />
+                                <label>Payment</label>
+
+                                <input checked="checked" type="radio" name="typeOperation" value="TRANS"
+                                       onchange="document.getElementById('forTransfer').style.display='block'"
+                                />
+                                <label>Transfer</label>
+
+                                <input type="radio" name="typeOperation" value="WITH"
+                                       onchange="document.getElementById('forTransfer').style.display='none'"/>
+                                <label>Withdraw</label>
+                            </div>
+                            <div class="input-group">
+                                <input placeholder="Amount" class="form-control" type="text" name="amount" style="border-radius: 50px"/>
+                                <input id="forTransfer" placeholder="To" class="form-control ml-2" type="text" name="accountCode2" style="border-radius: 50px"/>
+                            </div>
+                            <div class="container mt-3">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <button align="center" class="btn btn-outline-primary" style="border-radius: 25px"
+                                                type="submit">Enregistrer
+                                        </button>
+                                        <div class="text-danger mt-3" style="border-radius: 50px"
+                                             th:text="${#httpServletRequest.getParameter('error')}"
+                                        >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
                 <div class="card mt-3" style="border-radius: 25px">
                     <div class="card-body">
-                        <h6 >Operations History :</h6>
+                        <h6>Operations History :</h6>
                         <table class="table table-hover" style="border-radius: 20px" id="table">
                             <tr>
                                 <td>Op. Numb</td>
@@ -85,6 +126,15 @@
                                 <td th:text="${o.getOperationAmount()}"></td>
                             </tr>
                         </table>
+                        <ul class="nav nav-pills justify-content-center">
+                            <li th:each="page,status:${pages}">
+                                <a style="border-radius: 50px"
+                                   th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+                                   th:href="@{consultAccount(page=${status.index},size=${size},accountCode=${accountCode})}"
+                                   th:text="${status.index}+1">
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

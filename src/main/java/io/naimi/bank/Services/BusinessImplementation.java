@@ -26,16 +26,16 @@ public class BusinessImplementation implements IBusiness {
     @Override
     public Account consultAccount(String accountCode) {
         Account account = accountRepository.findById(accountCode).get();
-        if(account==null) throw new RuntimeException("Account Not Found!");
+        if (account == null) throw new RuntimeException("Account Not Found!");
         return account;
     }
 
     @Override
     public void pay(String accountCode, double amount) {
         Account account = consultAccount(accountCode);
-        Payment payment = new Payment(null,new Date(),amount,account);
+        Payment payment = new Payment(null, new Date(), amount, account);
         operationRepository.save(payment);
-        account.setBalance(account.getBalance()+amount);
+        account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
     }
 
@@ -43,22 +43,25 @@ public class BusinessImplementation implements IBusiness {
     public void withdraw(String accountCode, double amount) {
         Account account = consultAccount(accountCode);
         double facilitesCaisse = 0;
-        if(account instanceof CheckingAccount){
+        if (account instanceof CheckingAccount) {
             facilitesCaisse = ((CheckingAccount) account).getOverdraft();
         }
-        if(account.getBalance()+facilitesCaisse<amount)
+        if (account.getBalance() + facilitesCaisse < amount)
             throw new RuntimeException("Not Enough Balance");
 
-        Withdrawal withdrawal = new Withdrawal(null,new Date(),amount,account);
+        Withdrawal withdrawal = new Withdrawal(null, new Date(), amount, account);
         operationRepository.save(withdrawal);
-        account.setBalance(account.getBalance()-amount);
+        account.setBalance(account.getBalance() - amount);
         accountRepository.save(account);
     }
 
     @Override
     public void transfer(String accountCodeSender, String accountCodeReceiver, double amount) {
-            withdraw(accountCodeSender,amount);
-            pay(accountCodeReceiver,amount);
+        if (accountCodeReceiver.equals(accountCodeSender))
+             throw new RuntimeException("Same Account");
+            withdraw(accountCodeSender, amount);
+            pay(accountCodeReceiver, amount);
+
     }
 
     @Override
