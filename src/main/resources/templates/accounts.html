@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Accounts - Bank</title>
+</head>
+<body>
+<div layout:fragment="content" class="mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card" style="border-radius: 25px">
+                    <div class="card-body">
+                        <h6 >Search an account :</h6>
+                        <hr class="mb-3"/>
+                        <form th:action="@{consultAccount}" method="post">
+                            <div class="form-group">
+                                <input type="text" name="accountCode" class="form-control"
+                                       style="border-radius: 25px" placeholder="type in the account code" th:value="${accountCode}">
+                            </div>
+                        </form>
+                        <div class="alert alert-danger" th:if="${exception}">
+                            Account Not Found!
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3" style="border-radius: 25px" th:if="${account}">
+                    <div class="card-body">
+                        <h6 >Account Infos :</h6>
+                        <hr class="mb-3"/>
+                        <div class="form-group row ml-4">
+                            <label class="col-form-label mr-3 font-weight-bold">Account Code : </label>
+                            <label class="col-form-label" th:text="${account.accountCode}"></label>
+                        </div>
+                        <div class="form-group row ml-4">
+                            <label class="col-form-label mr-3 font-weight-bold">Client : </label>
+                            <label class="col-form-label" th:text="${account.getClient().getClientName()}"></label>
+                        </div>
+                        <div class="form-group row ml-4">
+                            <label class="col-form-label mr-3 font-weight-bold">Account Type : </label>
+                            <label class="col-form-label" th:text="${account.class.simpleName}"></label>
+                        </div>
+                        <div class="form-group row ml-4" th:if="${account.class.simpleName=='CheckingAccount'}">
+                            <label class="col-form-label mr-3 font-weight-bold">Overdraft : </label>
+                            <label class="col-form-label" th:text="${account.overdraft}"></label>
+                        </div>
+                        <div class="form-group row ml-4" th:if="${account.class.simpleName=='SavingsAccount'}">
+                            <label class="col-form-label mr-3 font-weight-bold">Rate : </label>
+                            <label class="col-form-label" th:text="${account.rate}"></label>
+                        </div>
+                        <div class="form-group row ml-4">
+                            <label class="col-form-label mr-3 font-weight-bold">Balance : </label>
+                            <label class="col-form-label" th:text="${account.getBalance()}"></label>
+                        </div>
+                        <div class="form-group row ml-4">
+                            <label class="col-form-label mr-3 font-weight-bold">Creation Date : </label>
+                            <label class="col-form-label" th:text="${account.getDateCreation()}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" th:if="${account}">
+                <div class="card" style="border-radius: 25px">
+                    <div class="card-body">
+                        <h6 >Account Operations:</h6>
+                        <hr class="mb-3"/>
+                    </div>
+                </div>
+                <div class="card mt-3" style="border-radius: 25px">
+                    <div class="card-body">
+                        <h6 >Operations History :</h6>
+                        <table class="table table-hover" style="border-radius: 20px" id="table">
+                            <tr>
+                                <td>Op. Numb</td>
+                                <td>Op. Type</td>
+                                <td>Op. Date</td>
+                                <td>Op. Amount</td>
+                            </tr>
+                            <tr th:each="o:${listOperation}">
+                                <td th:text="${o.getOperationNumber()}"></td>
+                                <td th:text="${o.class.simpleName}"></td>
+                                <td th:text="${o.getOperationDate()}"></td>
+                                <td th:text="${o.getOperationAmount()}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

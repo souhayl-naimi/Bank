@@ -26,6 +26,7 @@ public class BusinessImplementation implements IBusiness {
     @Override
     public Account consultAccount(String accountCode) {
         Account account = accountRepository.findById(accountCode).get();
+        if(account==null) throw new RuntimeException("Account Not Found!");
         return account;
     }
 

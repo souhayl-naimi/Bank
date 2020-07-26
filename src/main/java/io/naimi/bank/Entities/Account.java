@@ -22,6 +22,7 @@ import java.util.Date;
 public abstract class Account implements Serializable {
     @Id
     private String accountCode;
+    @Temporal(TemporalType.DATE)
     private Date dateCreation;
     private double balance;
     @ManyToOne
