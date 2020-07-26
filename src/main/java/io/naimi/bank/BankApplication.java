@@ -56,7 +56,7 @@ public class BankApplication implements CommandLineRunner {
         accountSa.setClient(soukaina);
         accountRepository.save(accountSa);
 
-      
+   
 /*
 
         businessImplementation.pay(accountCh.getAccountCode(),10000.00);
